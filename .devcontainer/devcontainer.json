@@ -1,0 +1,45 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
+{
+	"name": "Node.js",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "mcr.microsoft.com/devcontainers/javascript-node:1-20-bookworm",
+	"features": {
+		"ghcr.io/devcontainers-contrib/features/gitmux:1": {},
+		"ghcr.io/ebaskoro/devcontainer-features/sdkman:1.0.0": {
+			"candidate": "java",
+            "version": "8.0.392-amzn"
+		},
+		"ghcr.io/eliises/devcontainer-features/bash-profile:1.0.1": {
+			"command": "source /usr/share/bash-completion/completions/git",
+			"file": "$_REMOTE_USER_HOME/.bashrc"
+		},
+		"ghcr.io/devcontainers/features/rust:1.1.1": {
+			"version": "1.63",
+			"profile": "complete"
+		},
+		"ghcr.io/wxw-matt/devcontainer-features/command_runner:0.5.0": {
+			"command1": "su vscode",
+			"command2": "curl -L https://foundry.paradigm.xyz | bash",
+			"command3": "source /root/.bashrc",
+			"command4": "foundryup",
+			"command5": "forge install",
+			"command6": "forge build"
+        }
+	}
+
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "yarn install",
+
+	// Configure tool-specific properties.
+	// "customizations": {},
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
+}
