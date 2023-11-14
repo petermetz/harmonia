@@ -33,43 +33,43 @@ class BuildAndProposeDraftTransactionFlow(
 
     @Suspendable
     override fun call(): WireTransaction? {
-//        val lockedAssetState = constructLockedAsset(swapTxDetails.cordaAssetState.state.data, swapTxDetails.receiverCordaName)
-//        val lockCommand = Command(LockCommand.Lock, listOf(ourIdentity.owningKey))
-//        val lockState = LockState(
-//            swapTxDetails.cordaAssetState.state.data.owner.owningKey,
-//            swapTxDetails.receiverCordaName.owningKey,
-//            notary.owningKey,
-//            swapTxDetails.approvedCordaValidators.map { it.owningKey },
-//            swapTxDetails.minimumNumberOfEventValidations,
-//            swapTxDetails.unlockEvent,
-//            participants = listOf(ourIdentity, swapTxDetails.receiverCordaName)
-//        )
-//
-//        val builder = TransactionBuilder(notary = notary)
-//            .addInputState(swapTxDetails.cordaAssetState)
-//            .addOutputState(lockedAssetState, notary = notary, encumbrance = 1)
-//            .addOutputState(lockState, notary = notary, encumbrance = 0)
-//            .addCommand(lockCommand)
-//
-//        builder.verify(serviceHub)
-//        val session = initiateFlow(swapTxDetails.receiverCordaName)
-//        val wireTx = builder.toWireTransaction(serviceHub)
-//        sendTransactionDetails(session, wireTx)
-//
-//        val draftTxVerificationResult = session.receive<Boolean>().unwrap { it }
-//        return handleVerificationResult(draftTxVerificationResult, wireTx)
+        val lockedAssetState = constructLockedAsset(swapTxDetails.cordaAssetState.state.data, swapTxDetails.receiverCordaName)
+        val lockCommand = Command(LockCommand.Lock, listOf(ourIdentity.owningKey))
+        val lockState = LockState(
+            swapTxDetails.cordaAssetState.state.data.owner.owningKey,
+            swapTxDetails.receiverCordaName.owningKey,
+            notary.owningKey,
+            swapTxDetails.approvedCordaValidators.map { it.owningKey },
+            swapTxDetails.minimumNumberOfEventValidations,
+            swapTxDetails.unlockEvent,
+            participants = listOf(ourIdentity, swapTxDetails.receiverCordaName)
+        )
+
+        val builder = TransactionBuilder(notary = notary)
+            .addInputState(swapTxDetails.cordaAssetState)
+            .addOutputState(lockedAssetState, notary = notary, encumbrance = 1)
+            .addOutputState(lockState, notary = notary, encumbrance = 0)
+            .addCommand(lockCommand)
+
+        builder.verify(serviceHub)
+        val session = initiateFlow(swapTxDetails.receiverCordaName)
+        val wireTx = builder.toWireTransaction(serviceHub)
+        sendTransactionDetails(session, wireTx)
+
+        val draftTxVerificationResult = session.receive<Boolean>().unwrap { it }
+        return handleVerificationResult(draftTxVerificationResult, wireTx)
         return null;
     }
 
     @Suspendable
     private fun sendTransactionDetails(session: FlowSession, wireTx: WireTransaction) {
-//        session.send(wireTx)
-//        val wireTxDependencies = wireTx.inputs.map { it.txhash }.toSet() + wireTx.references.map { it.txhash }.toSet()
-//        wireTxDependencies.forEach {
-//            serviceHub.validatedTransactions.getTransaction(it)?.let { stx ->
-//                subFlow(SendTransactionFlow(session, stx))
-//            }
-//        }
+        session.send(wireTx)
+        val wireTxDependencies = wireTx.inputs.map { it.txhash }.toSet() + wireTx.references.map { it.txhash }.toSet()
+        wireTxDependencies.forEach {
+            serviceHub.validatedTransactions.getTransaction(it)?.let { stx ->
+                subFlow(SendTransactionFlow(session, stx))
+            }
+        }
     }
 
     @Suspendable
@@ -81,6 +81,8 @@ class BuildAndProposeDraftTransactionFlow(
             null
         }
     }
+
+    @Suspendable
     private fun constructLockedAsset(asset: OwnableState, newOwner: Party): OwnableState {
         // Build composite key
         val compositeKey =  CompositeKey.Builder()
