@@ -11,5 +11,8 @@
   "dependencies": {
     "ethereumjs-util": "^7.1.5",
     "ethers": "^6.6.0"
+  },
+  "devDependencies": {
+    "mocha": "10.2.0"
   }
 }

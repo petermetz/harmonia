@@ -24,7 +24,7 @@ ext {
 }
 
 solidity {
-    executable = "/usr/local/bin/solc"
+    executable = "/workspaces/harmonia/solc"
     version = "0.8.17" // NOTE: without version gradle fails with "Cannot invoke method split() on null object"
     pathRemappings = [ openzeppelin : "lib/openzeppelin-contracts/contracts" ]
     evmVersion = "ISTANBUL"

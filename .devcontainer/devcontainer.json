@@ -4,8 +4,14 @@
 	"name": "Node.js",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"image": "mcr.microsoft.com/devcontainers/javascript-node:1-20-bookworm",
+	"runArgs": ["--network=host"],
 	"features": {
-		"ghcr.io/devcontainers-contrib/features/gitmux:1": {},
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1.3.1": {
+			"moby": true,
+			"installDockerBuildx": true,
+			"version": "24.0.7",
+			"dockerDashComposeVersion": "v3"
+		},
 		"ghcr.io/ebaskoro/devcontainer-features/sdkman:1.0.0": {
 			"candidate": "java",
             "version": "8.0.392-amzn"
@@ -18,14 +24,13 @@
 			"version": "1.63",
 			"profile": "complete"
 		},
-		"ghcr.io/wxw-matt/devcontainer-features/command_runner:0.5.0": {
-			"command1": "su vscode",
-			"command2": "curl -L https://foundry.paradigm.xyz | bash",
-			"command3": "source /root/.bashrc",
-			"command4": "foundryup",
-			"command5": "forge install",
-			"command6": "forge build"
-        }
+		// "ghcr.io/wxw-matt/devcontainer-features/command_runner:0.5.0": {
+		// 	"command1": "/bin/su -c \"curl -L https://foundry.paradigm.xyz | bash\" - node",
+		// 	"command2": "/bin/su -c \"source /home/node/.bashrc\" - node",
+		// 	"command3": "/bin/su -c \"foundryup - node",
+		// 	"command4": "forge install",
+		// 	"command5": "forge build"
+        // }
 	}
 
 	// Features to add to the dev container. More info: https://containers.dev/features.

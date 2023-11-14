@@ -102,7 +102,7 @@ task deployNodes(type: Cordform, dependsOn: ['jar']) {
                 'custom.jvmArgs': [
                         "-Xmx1G",
                         "-XX:+UseG1GC",
-                        "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5001"
+                        "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=15001"
                 ]
         ]
         rpcSettings {
@@ -112,32 +112,32 @@ task deployNodes(type: Cordform, dependsOn: ['jar']) {
     }
     node {
         name "O=PartyA,L=London,C=GB"
-        p2pPort 10002
+        p2pPort 33002
         extraConfig = [
                 'custom.jvmArgs': [
                         "-Xmx1G",
                         "-XX:+UseG1GC",
-                        "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5002"
+                        "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=25002"
                 ]
         ]
         rpcSettings {
-            address("localhost:10012")
-            adminAddress("localhost:10022")
+            address("localhost:33012")
+            adminAddress("localhost:33022")
         }
     }
     node {
         name "O=PartyB,L=New York,C=US"
-        p2pPort 10003
+        p2pPort 33003
         extraConfig = [
                 'custom.jvmArgs': [
                         "-Xmx1G",
                         "-XX:+UseG1GC",
-                        "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5003"
+                        "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=15003"
                 ]
         ]
         rpcSettings {
-            address("localhost:10013")
-            adminAddress("localhost:10023")
+            address("localhost:33013")
+            adminAddress("localhost:33023")
         }
     }
 }
